@@ -2,7 +2,8 @@ import time
 import os
 import sqlite3
 from flask import Flask, jsonify, request
-from multiprocessing import Process, Manager
+from werkzeug.serving import make_server
+import threading
 
 DB_FILE = 'dataset.db'
 
@@ -55,9 +56,20 @@ def create_app():
 
     return app
 
-def run_flask_app():
-    app = create_app()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+class ServerThread(threading.Thread):
+
+    def __init__(self, app):
+        threading.Thread.__init__(self)
+        self.server = make_server('0.0.0.0', 5000, app)
+        self.ctx = app.app_context()
+        self.ctx.push()
+
+    def run(self):
+        print("Starting server")
+        self.server.serve_forever()
+
+    def shutdown(self):
+        self.server.shutdown()
 
 def check_temp_file():
     temp_file_path = 'temp_data.txt'
@@ -86,19 +98,18 @@ def check_temp_file():
         time.sleep(2)  # Check the file every 2 seconds
 
 def main():
-    # Create and start the Flask server process
-    flask_process = Process(target=run_flask_app)
-    flask_process.start()
-
-    print(f"Flask process PID: {flask_process.pid}")
+    app = create_app()
+    server_thread = ServerThread(app)
+    server_thread.start()
+    print(f"Flask server running in thread with PID: {os.getpid()}")
 
     # Run the file checking in the main process
     try:
         check_temp_file()
     except KeyboardInterrupt:
         print("Exiting...")
-        flask_process.terminate()
-        flask_process.join()
+        server_thread.shutdown()
+        server_thread.join()
         exit(0)
 
 if __name__ == '__main__':
