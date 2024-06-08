@@ -31,7 +31,8 @@ def fetch_random_urls():
 def trigger_post():
     clothing_url, sports_url, vehicle_url = fetch_random_urls()
     destination_ip = '192.168.241.164:8000/'
-    
+
+    # Send URLs to destination IP address
     requests.post(f'http://{destination_ip}', json=[{'type': 'clothing', 'url': clothing_url},{'type': 'sports', 'url': sports_url},{'type': 'vehicle', 'url': vehicle_url}])
 
     return jsonify({"status": "GET request received"}), 200
