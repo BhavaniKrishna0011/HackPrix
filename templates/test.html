@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Headphone Ad</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #01162b, #0a5e97);
+            color: #fff;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 700px;
+            margin: 5% auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        .header,
+        .main-content,
+        .footer {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #dadada;
+        }
+
+        .main-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .main-content img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+
+        .footer {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .ad-container {
+            background: #3467C3;
+            border-radius: 20px;
+            padding: 20px;
+            display: none;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: popUp 1s ease-in-out;
+            z-index: 10;
+        }
+
+        .ad-container img {
+            border-radius: 10px;
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+        }
+
+        .ad-content {
+            margin-left: 20px;
+            max-width: 250px;
+        }
+
+        .ad-content h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .ad-content p {
+            margin: 10px 0;
+            font-size: 1.0em;
+        }
+
+        .ad-content .price {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #f1c40f;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #c0392b;
+        }
+
+        @keyframes popUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .blur-background {
+            filter: blur(15px);
+            pointer-events: none;
+            /* Prevent interactions with blurred content */
+        }
+    </style>
+    <script src="fetching.js"></script>
+</head>
+
+<body>
+    <div class="content">
+        <div class="header">
+            <h1>TrustAd</h1>
+        </div>
+        <div class="main-content">
+            <p>TrustAd is an innovative advertising model designed to deliver personalized advertisements to users
+                without compromising their privacy. Unlike traditional advertising systems that require sending your
+                browsing history and personal data to remote servers, TrustAd ensures that your data stays on your
+                device. This unique approach allows for a personalized ad experience while maintaining the highest level
+                of privacy protection.</p>
+            <img src="illuminati.png" alt="Gadget">
+            <p>Your Privacy, Our Priority</p>
+        </div>
+        <div class="footer">
+            <!--&copy;-->
+        </div>
+    </div>
+
+    <div class="ad-container" id="adContainer">
+        <button class="close-btn" id="closeBtn">&times;</button>
+        <img src="{{ image_url }}" alt="add_image" id="adImage">
+        <div class="ad-content">
+            <p><strong>ADVERTISMENT</strong></p>
+            <p>"This ad is shown on the basis of your interest towards {{highest_category}}"</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch JSON data and update ad image URL
+        function updateAdImage() {
+            fetch('D:\\Connect\\highest_category_url.json') // Replace 'your_json_file.json' with the actual path to your JSON file
+                .then(response => response.json())
+                .then(data => {
+                    const adImage = document.getElementById('adImage');
+                    adImage.src = data.url;
+                })
+                .catch(error => console.error('Error fetching JSON:', error));
+        }
+
+        // Function to show ad
+        function showAd() {
+            const adContainer = document.getElementById('adContainer');
+            const content = document.querySelector('.content');
+            adContainer.style.display = 'flex';
+            content.classList.add('blur-background');
+            setTimeout(() => {
+                adContainer.style.display = 'none';
+                content.classList.remove('blur-background');
+            }, 5000); // Display ad for 5 seconds
+        }
+
+        // Function to hide ad
+        function hideAd() {
+            const adContainer = document.getElementById('adContainer');
+            const content = document.querySelector('.content');
+            adContainer.style.display = 'none';
+            content.classList.remove('blur-background');
+        }
+
+        document.getElementById('closeBtn').addEventListener('click', hideAd);
+
+        setInterval(() => {
+            updateAdImage(); // Update ad image URL every 10 seconds
+            showAd(); // Show ad every 10 seconds
+        }, 10000);
+    </script>
+</body>
+
+</html>

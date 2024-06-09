@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>real-incognito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">SecureTrends</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('test') }}">Demonstration</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="">GitHub</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="https://github.com/BhavaniKrishna0011/HackPrix"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/ShahirB37431"><i class="fas fa-times"></i></a>
+            <a href="#" id="theme-toggle"><i class="fas fa-moon"></i></a>
+        </div>
+    </nav>
+    <div class="content">
+        <img src="{{ url_for('static', filename='images/illuminati.png') }}" alt="Eye Symbol">
+        <h1>SecureTrends</h1>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            {% if image_url %}
+            <img src="{{ image_url }}" alt="{{ highest_category }}">
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script1.js') }}"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Open the modal
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
