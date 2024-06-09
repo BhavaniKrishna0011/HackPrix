@@ -1,7 +1,7 @@
 import requests
 
 def send_get_request():
-    server_url = ' http://192.168.65.3:8001/trigger_post'
+    server_url = ' http://192.168.241.164:8001/trigger_post'
     try:
         response = requests.get(server_url)
         if response.status_code == 200:
