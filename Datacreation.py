@@ -1,7 +1,7 @@
 import sqlite3
 
 DB_FILE = 'dataset.db'
-TEXT_FILE = 'temp_data.txt'
+TEXT_FILE = 'temp_data1.txt'
 
 # def create_tables():
 #     conn = sqlite3.connect(DB_FILE)
