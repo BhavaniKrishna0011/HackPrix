@@ -12,11 +12,11 @@ def create_app():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
 
-    # Create separate tables for clothing, sports, and vehicles
+    # Create separate tables for clothing, electronics, and vehicles
     c.execute('''CREATE TABLE IF NOT EXISTS clothing
                  (id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS sports
+    c.execute('''CREATE TABLE IF NOT EXISTS electronics
                  (id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS vehicles
@@ -31,12 +31,12 @@ def create_app():
         c = conn.cursor()
         c.execute("SELECT * FROM clothing")
         clothing = c.fetchall()
-        c.execute("SELECT * FROM sports")
-        sports = c.fetchall()
+        c.execute("SELECT * FROM electronics")
+        electronics = c.fetchall()
         c.execute("SELECT * FROM vehicles")
         vehicles = c.fetchall()
         conn.close()
-        return jsonify({"clothing": clothing, "sports": sports, "vehicles": vehicles})
+        return jsonify({"clothing": clothing, "electronics": electronics, "vehicles": vehicles})
 
     @app.route('/dataset', methods=['POST'])
     def update_dataset():
@@ -46,8 +46,8 @@ def create_app():
         c = conn.cursor()
         if data_type.lower() == 'clothing':
             c.execute("INSERT INTO clothing (url) VALUES (?)", (url,))
-        elif data_type.lower() == 'sports':
-            c.execute("INSERT INTO sports (url) VALUES (?)", (url,))
+        elif data_type.lower() == 'electronics':
+            c.execute("INSERT INTO electronics (url) VALUES (?)", (url,))
         elif data_type.lower() == 'vehicle':
             c.execute("INSERT INTO vehicles (url) VALUES (?)", (url,))
         conn.commit()
@@ -85,8 +85,8 @@ def check_temp_file():
                         c = conn.cursor()
                         if data_type.lower() == 'clothing':
                             c.execute("INSERT INTO clothing (url) VALUES (?)", (url,))
-                        elif data_type.lower() == 'sports':
-                            c.execute("INSERT INTO sports (url) VALUES (?)", (url,))
+                        elif data_type.lower() == 'electronics':
+                            c.execute("INSERT INTO electronics (url) VALUES (?)", (url,))
                         elif data_type.lower() == 'vehicle':
                             c.execute("INSERT INTO vehicles (url) VALUES (?)", (url,))
                         conn.commit()
@@ -95,7 +95,7 @@ def check_temp_file():
                 os.remove(temp_file_path)
             except Exception as e:
                 print(f"Error reading from temp file: {e}")
-        time.sleep(2)  # Check the file every 2 seconds
+        time.sleep(1)  # Check the file every 2 seconds
 
 def main():
     app = create_app()

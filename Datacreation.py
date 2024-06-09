@@ -1,30 +1,59 @@
-import random, time
+import sqlite3
 
-def generate_random_data(file_path):
-    # Define the patterns for types and URLs
-    types = ['clothing', 'sports', 'vehicle']
-    urls = ['http://example.com/image1.jpg', 'http://example.com/image2.jpg', 'http://example.com/image3.jpg']
+DB_FILE = 'dataset.db'
+TEXT_FILE = 'temp_data.txt'
 
-    # Generate random data
-    random_data = []
-    data_type = random.choice(types)
-    url = random.choice(urls)
-    random_data.append(f"{data_type},{url}")
+# def create_tables():
+#     conn = sqlite3.connect(DB_FILE)
+#     c = conn.cursor()
+#     c.execute('''
+#         CREATE TABLE IF NOT EXISTS clothing (
+#             id INTEGER PRIMARY KEY AUTOINCREMENT,
+#             url TEXT NOT NULL
+#         )
+#     ''')
+#     c.execute('''
+#         CREATE TABLE IF NOT EXISTS electronics (
+#             id INTEGER PRIMARY KEY AUTOINCREMENT,
+#             url TEXT NOT NULL
+#         )
+#     ''')
+#     c.execute('''
+#         CREATE TABLE IF NOT EXISTS vehicles (
+#             id INTEGER PRIMARY KEY AUTOINCREMENT,
+#             url TEXT NOT NULL
+#         )
+#     ''')
+#     conn.commit()
+#     conn.close()
 
-    # Save data to file
-    with open(file_path, 'w') as file:
-        for data in random_data:
-            file.write(data + '\n')
+def insert_data_from_file(file_path):
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
 
-def main():
-    # Specify the file path
-    file_path = 'temp_data.txt'
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+        
+        for line in lines:
+            line = line.strip()
+            if line:
+                parts = line.split(',', 1)
+                if len(parts) == 2:
+                    data_type = parts[0].strip().lower()
+                    url = parts[1].strip()
+                    
+                    if data_type == 'clothing':
+                        c.execute("INSERT INTO clothing (url) VALUES (?)", (url,))
+                    elif data_type == 'electronics':
+                        c.execute("INSERT INTO electronics (url) VALUES (?)", (url,))
+                    elif data_type == 'vehicle':
+                        c.execute("INSERT INTO vehicles (url) VALUES (?)", (url,))
+                    else:
+                        print(f"Unknown type: {data_type}")
+    
+    conn.commit()
+    conn.close()
 
-    # Generate and save random data
-    generate_random_data(file_path)
-    print("Random data saved to:", file_path)
-
-if __name__ == "__main__":
-    for i in range(1,100):
-        time.sleep(2)
-        main()
+if __name__ == '__main__':
+    # create_tables()
+    insert_data_from_file(TEXT_FILE)
