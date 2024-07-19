@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>real-incognito</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="../static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
         <div class="logo">TrustAD
         </div>
         <ul class="nav-links">
-            <li><a href="{{ url_for('test') }}">Demonstration</a></li>
+            <li><a href="test.html">Demonstration</a></li>
             <li><a href="#">Contact Us</a></li>
             <li><a href="#">Documentation</a></li>
             <li><a href="">GitHub</a></li>
@@ -24,20 +24,20 @@
         </div>
     </nav>
     <div class="content">
-        <img src="{{ url_for('static', filename='images/illuminati.png') }}" alt="Eye Symbol">
+        <img src="../static/images/illuminati.png" alt="Eye Symbol">
         <h1>TrustAD
         </h1>
     </div>
 
     <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <!-- <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             {% if image_url %}
             <img src="{{ image_url }}" alt="{{ highest_category }}">
             {% endif %}
         </div>
-    </div>
+    </div> -->
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script1.js') }}"></script>
