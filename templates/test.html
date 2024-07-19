@@ -154,7 +154,7 @@
                 browsing history and personal data to remote servers, TrustAd ensures that your data stays on your
                 device. This unique approach allows for a personalized ad experience while maintaining the highest level
                 of privacy protection.</p>
-            <img src="illuminati.png" alt="Gadget">
+            <img src="../static/images/img1.png" alt="Gadget">
             <p>Your Privacy, Our Priority</p>
         </div>
         <div class="footer">
@@ -164,17 +164,17 @@
 
     <div class="ad-container" id="adContainer">
         <button class="close-btn" id="closeBtn">&times;</button>
-        <img src="{{ image_url }}" alt="add_image" id="adImage">
+        <img src="https://62a5-2401-4900-4e1c-fde2-bcb5-f2df-de45-57a1.ngrok-free.app/Electronics/Bose1.jpg">
         <div class="ad-content">
             <p><strong>ADVERTISMENT</strong></p>
-            <p>"This ad is shown on the basis of your interest towards {{highest_category}}"</p>
+            <p>"This ad is shown on the basis of your interest towards Electronics"</p>
         </div>
     </div>
 
     <script>
         // Function to fetch JSON data and update ad image URL
         function updateAdImage() {
-            fetch('D:\\Connect\\highest_category_url.json') // Replace 'your_json_file.json' with the actual path to your JSON file
+            fetch('../output/data.json') // Replace 'your_json_file.json' with the actual path to your JSON file
                 .then(response => response.json())
                 .then(data => {
                     const adImage = document.getElementById('adImage');

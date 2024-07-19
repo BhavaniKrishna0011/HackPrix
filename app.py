@@ -137,17 +137,6 @@ for user_id in range(1, 2):
 # Client federation process
 client_federation()
 
-@app.route('/')
-def index():
-    highest_category_file_path = os.path.join(app.static_folder, 'highest_category.txt')
-
-    with open(highest_category_file_path, 'r') as f:
-        highest_count_category = f.read()
-
-    image_url = get_image_url(highest_count_category)
-
-    return render_template('index.html', highest_category=highest_count_category, image_url=image_url)
-
 @app.route('/test')
 def test():
     highest_category_file_path = os.path.join(app.static_folder, 'highest_category.txt')
